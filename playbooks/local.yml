@@ -1,0 +1,13 @@
+- hosts: localhost
+
+  vars:
+    ssh_key_name: "id_ed25519_github"
+    ssh_src_path: "ssh"
+    ssh_dst_path: "{{ lookup('env', 'HOME') }}/.ssh"
+
+  # pre_tasks:
+  #   - include: tasks/update.yml
+
+  tasks:
+    - include: tasks/ssh.yml
+

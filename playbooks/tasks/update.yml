@@ -1,0 +1,40 @@
+- name: Update Apt Package Manager
+  when: ansible_os_family == "Debian"
+  become: true
+  apt:
+    update_cache: true
+    cache_valid_time: 3600
+  # tags:
+  #   - install
+  #   - update
+  #   - upgrade
+
+- name: Upgrade Apt Package Manager
+  when: ansible_os_family == "Debian"
+  become: true
+  apt:
+    name: "*"
+    state: latest
+  # tags:
+  #   - install
+  #   - upgrade
+
+- name: Update Dnf Package Manager
+  when: ansible_os_family == "RedHat"
+  become: true
+  dnf:
+    update_cache: true
+  # tags:
+  #   - install
+  #   - update
+  #   - upgrade
+
+- name: Upgrade Dnf Package Manager
+  when: ansible_os_family == "RedHat"
+  become: true
+  dnf:
+    name: "*"
+    state: latest
+  # tags:
+  #   - install
+  #   - upgrade

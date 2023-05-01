@@ -1,0 +1,23 @@
+- name: SSH Directory check
+  file:
+    dest: "{{ ssh_dst_path }}"
+    mode: 0700
+    state: directory
+
+- name: Copy SSH Key
+  copy:
+    src: "{{ ssh_src_path }}/{{ ssh_key_name }}"
+    dest: "{{ ssh_dst_path }}/{{ ssh_key_name }}"
+    mode: 0600
+
+- name: Copy SSH Public Key
+  copy:
+    src: "{{ ssh_src_path }}/{{ ssh_key_name }}.pub"
+    dest: "{{ ssh_dst_path }}/{{ ssh_key_name }}.pub"
+    mode: 0644
+
+- name: Set SSH Authorized
+  authorized_key:
+    user: "{{ lookup('env', 'USER') }}"
+    state: present
+    key: "{{ lookup('file', '{{ ssh_dst_path }}/{{ ssh_key_name }}.pub') }}"
