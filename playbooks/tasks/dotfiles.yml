@@ -1,0 +1,13 @@
+- name: Dotfiles bare
+  git:
+    repo: "git@github.com:RossLaing8417/.dotfiles.git"
+    dest: "{{ home_path }}/.dotfiles"
+    bare: true
+    version: "master"
+
+- name: Dotfiles fetch
+  shell: "cd {{ home_path }} && git --git-dir={{ home_path }}/.dotfiles --work-tree={{ home_path }} fetch"
+
+- name: Dotfiles checkout
+  shell: "cd {{ home_path }} && git --git-dir={{ home_path }}/.dotfiles --work-tree={{ home_path }} checkout --recurse-submodule"
+

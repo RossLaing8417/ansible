@@ -1,0 +1,36 @@
+- name: Install Core Packages
+  become: true
+  package:
+    name:
+      - cmake
+      - curl
+      - gcc
+      - htop
+      - nodejs
+      - npm
+      - ripgrep
+      - tmux
+    state: present
+
+- name: Nerd Fonts Check
+  stat:
+    path: "{{ home_path }}/dev/apps/nerd-fonts"
+  register: nerdfonts_stat
+
+- name: Clone Nerd Fonts
+  when: nerdfonts_stat.stat.exists == false
+  shell: "git clone --filter=blob:none --sparse git@github.com:ryanoasis/nerd-fonts {{ home_path }}/dev/apps/nerd-fonts"
+
+- name: JetBrainsMono Check
+  stat:
+    path: "{{ home_path }}/dev/apps/nerd-fonts/patched-fonts/JetBrainsMono"
+  register: jetbrainsmono_stat
+
+- name: Checkout JetBrainsMono
+  when: jetbrainsmono_stat.stat.exists == false
+  shell: "cd {{ home_path }}/dev/apps/nerd-fonts && git sparse-checkout add patched-fonts/JetBrainsMono"
+
+- name: Install JetBrainsMono
+  when: jetbrainsmono_stat.stat.exists == false
+  shell: "cd {{ home_path }}/dev/apps/nerd-fonts && ./install.sh JetBrainsMono"
+

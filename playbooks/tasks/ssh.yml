@@ -21,3 +21,4 @@
     user: "{{ lookup('env', 'USER') }}"
     state: present
     key: "{{ lookup('file', '{{ ssh_dst_path }}/{{ ssh_key_name }}.pub') }}"
+

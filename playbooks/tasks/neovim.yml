@@ -1,0 +1,28 @@
+- name: Install Neovim Dependencies
+  become: true
+  package:
+    name:
+      - ninja-build
+      - gettext
+      - cmake
+      - unzip
+      - curl
+    state: present
+
+- name: Checkout Neovim
+  git:
+    repo: "git@github.com:neovim/neovim.git"
+    dest: "{{ dev_apps_path }}/neovim"
+    version: "stable"
+    # version: "nightly"
+
+- name: Clean Neovim
+  shell: "cd {{ dev_apps_path }}/neovim && make distclean"
+
+- name: Build Neovim
+  shell: "cd {{ dev_apps_path }}/neovim && make CMAKE_BUILD_TYPE=Release"
+
+- name: Install Neovim
+  become: true
+  shell: "cd {{ dev_apps_path }}/neovim && make install"
+

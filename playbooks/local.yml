@@ -1,13 +1,37 @@
 - hosts: localhost
 
   vars:
+    home_path: "{{ lookup('env', 'HOME') }}"
     ssh_key_name: "id_ed25519_github"
     ssh_src_path: "ssh"
-    ssh_dst_path: "{{ lookup('env', 'HOME') }}/.ssh"
+    ssh_dst_path: "{{ home_path }}/.ssh"
+    dev_path: "{{ home_path }}/dev"
+    dev_apps_path: "{{ dev_path }}/apps"
+    dev_personal_path: "{{ dev_path }}/personal"
 
-  # pre_tasks:
-  #   - include: tasks/update.yml
+  pre_tasks:
+    - include: tasks/update.yml
+    - name: Check Dev Path
+      file:
+        dest: "{{ dev_path }}"
+        mode: 0700
+        state: directory
+    - name: Check Dev Apps Path
+      file:
+        dest: "{{ dev_apps_path }}"
+        mode: 0700
+        state: directory
+    - name: Check Dev Personal Path
+      file:
+        dest: "{{ dev_personal_path }}"
+        mode: 0700
+        state: directory
 
   tasks:
     - include: tasks/ssh.yml
+    - include: tasks/git.yml
+    - include: tasks/core.yml
+    - include: tasks/zsh.yml
+    - include: tasks/neovim.yml
+    - include: tasks/dotfiles.yml
 

@@ -1,0 +1,18 @@
+- name: Install Git
+  become: true
+  package:
+    name: git
+    state: present
+
+- name: Git User Name
+  git_config:
+    name: user.name
+    scope: global
+    value: "Ross Laing"
+
+- name: Git User Email
+  git_config:
+    name: user.email
+    scope: global
+    value: "30736276+RossLaing8417@users.noreply.github.com"
+
