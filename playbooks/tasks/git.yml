@@ -16,3 +16,9 @@
     scope: global
     value: "30736276+RossLaing8417@users.noreply.github.com"
 
+- name: ReReRe
+  git_config:
+    name: rerere.enabled
+    scope: global
+    value: "true"
+

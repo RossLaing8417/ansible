@@ -10,6 +10,7 @@
       - npm
       - ripgrep
       - tmux
+      - fzf
     state: present
 
 - name: Nerd Fonts Check
